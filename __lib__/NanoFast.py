@@ -179,42 +179,61 @@ def cleanup(raw_data):
 
 def process_files(raw_data):
     """Processes the CSV files in the Raw Data folder."""
-    # Checking if excel files are present and list them.
+    # 1. Gather all CSV files
     excel_files = []
-
     for root, dirs, files in os.walk(raw_data):
         for file in files:
             if file.endswith(".csv"):
                 excel_files.append(os.path.join(root, file))
 
     if not excel_files:
-        print(f"{TEXT[LANGUAGE]['no_excel']}")
-        print("")
-        print(f"{TEXT[LANGUAGE]['script_stop']}")
-        print("-" * 30)
+        print(
+            f"{TEXT[LANGUAGE]['no_excel']}\n\n{TEXT[LANGUAGE]['script_stop']}\n{'-' * 30}"
+        )
         sys.exit(0)
 
-    # My for loop for iterating through all spreadsheets.
-    combined_df = pd.DataFrame()
-    # This is the line that creates dots for each file worked on.
+    # 2. Pre-scan for bad files before processing begins
+    bad_runs = []
     for file_path in excel_files:
-        print("*", end="", flush=True)
+        try:
+            pd.read_csv(file_path, usecols=[2])
+        except (pd.errors.ParserError, ValueError, pd.errors.EmptyDataError):
+            bad_runs.append(os.path.basename(os.path.dirname(file_path)))
 
+    # 3. If errors exist, list them all and prompt the user once
+    if bad_runs:
+        print(f"\n{TEXT[LANGUAGE]['missing_graph_error']}")
+        for run in bad_runs:
+            print(f" - {run}")
+        print("")
+        choice = input(TEXT[LANGUAGE]["continue_no_graph"]).strip().lower()
+        if choice in ["n", "no", "non", "não", "nao"]:
+            print(f"\n{TEXT[LANGUAGE]['safe_exit']}")
+            sys.exit(0)
+
+    print(f"\n{TEXT[LANGUAGE]['processing']}\n")
+
+    # 4. Main loop for iterating through all spreadsheets.
+    combined_df = pd.DataFrame()
+    for file_path in excel_files:
         # This is where the data is extracted.
-        csv_df = pd.read_csv(file_path, usecols=[2])
-        csv_df.columns = [0]
+        try:
+            csv_df = pd.read_csv(file_path, usecols=[2])
+            csv_df.columns = [0]
+            print("*", end="", flush=True)  # Print star for success
+        except (pd.errors.ParserError, ValueError, pd.errors.EmptyDataError):
+            csv_df = pd.DataFrame([TEXT[LANGUAGE]["invalid_graph_data"]])
+            print("X", end="", flush=True)  # Print X for failure
+
         # Find the json file in the folder
         json_path = os.path.join(os.path.dirname(file_path), "result.json")
         # Error if extra files found
         if not os.path.exists(json_path):
-            print("")
-            print("")
-            print(f"{TEXT[LANGUAGE]['stray_file']}{os.path.dirname(file_path)}")
-            print("")
-            print(f"{TEXT[LANGUAGE]['invalid_file']}")
-            print(f"{TEXT[LANGUAGE]['safe_exit']}")
-            print("-" * 30)
+            print(f"\n\n{TEXT[LANGUAGE]['stray_file']}{os.path.dirname(file_path)}")
+            print(f"\n{TEXT[LANGUAGE]['invalid_file']}")
+            print(f"{TEXT[LANGUAGE]['safe_exit']}\n{'-' * 30}")
             sys.exit(1)
+
         # Open file and give python the ability to read it.
         with open(json_path, "r") as json_file:
             # Reads the raw text from the file and translates it into a Python "dictionary". Save into the variable json_data.
@@ -246,7 +265,6 @@ def process_files(raw_data):
                 factory_data = ""
 
             # Add these scraped data points to the spreadsheet at the top
-            # This is the line that decides the order the json scrape is added to the spreadsheet
             json_list = [
                 end_time,
                 end_date,
@@ -529,7 +547,7 @@ def main():
             all_paths = get_all_paths_in_node(hierarchy)
             purge_unselected_paths(all_paths, keep_paths, selection_name)
     else:
-        print(f"{TEXT[LANGUAGE]['no_valid_date']}")
+        print(f"\n{TEXT[LANGUAGE]['no_valid_date']}")
 
     print("")
     print(f"{TEXT[LANGUAGE]['processing']}")

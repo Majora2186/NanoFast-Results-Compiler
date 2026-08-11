@@ -33,7 +33,10 @@
     "total_processed": "Total files processed: {}",
     "select_week": "Select a week to process (or 'All'): ",
     "select_day": "Select a day to process (or 'All'): ",
-    "back_btn": "Back"
+    "back_btn": "Back",
+    "missing_graph_error": "Error: Missing graph data in the following runs -> ",
+    "continue_no_graph": "Continue and compile without graph data? [Y]/N: ",
+    "invalid_graph_data": "INVALID GRAPH DATA"
   },
   "PT-BR": {
   "package_not_found": "não encontrado. Instalando...",
@@ -70,7 +73,10 @@
   "total_processed": "Total de arquivos processados: {}",
   "select_week": "Selecione uma semana para processar (ou 'All'): ",
   "select_day": "Selecione um dia para processar (ou 'All'): ",
-  "back_btn": "Voltar"
+  "back_btn": "Voltar",
+  "missing_graph_error": "Erro: Dados do gráfico ausentes nas seguintes execuções -> ",
+  "continue_no_graph": "Continuar e compilar sem dados do gráfico? [S]/N: ",
+  "invalid_graph_data": "DADOS DE GRÁFICO INVÁLIDOS"
 },
 "PT-PT": {
   "package_not_found": "não encontrado. A instalar...",
@@ -107,7 +113,10 @@
   "total_processed": "Total de ficheiros processados: {}",
   "select_week": "Selecione uma semana para processar (ou 'All'): ",
   "select_day": "Selecione um dia para processar (ou 'All'): ",
-  "back_btn": "Costas"
+  "back_btn": "Costas",
+  "missing_graph_error": "Erro: Dados do gráfico em falta nas seguintes execuções -> ",
+  "continue_no_graph": "Continuar e compilar sem dados do gráfico? [S]/N: ",
+  "invalid_graph_data": "DADOS DE GRÁFICO INVÁLIDOS"
 },
 "ES": {
   "package_not_found": "no encontrado. Instalando...",
@@ -144,7 +153,10 @@
   "total_processed": "Total de archivos procesados: {}",
   "select_week": "Seleccione una semana para procesar (o 'All'): ",
   "select_day": "Seleccione un día para procesar (o 'All'): ",
-  "back_btn": "Atrás"
+  "back_btn": "Atrás",
+  "missing_graph_error": "Error: Datos de gráfico faltantes en las siguientes ejecuciones -> ",
+  "continue_no_graph": "¿Continuar y compilar sin datos de gráfico? [S]/N: ",
+  "invalid_graph_data": "DATOS DE GRÁFICO INVÁLIDOS"
 },
 "FR": {
   "package_not_found": "introuvable. Installation en cours...",
@@ -181,6 +193,9 @@
   "total_processed": "Nombre total de fichiers traités : {}",
   "select_week": "Sélectionnez une semaine à traiter (ou 'All') : ",
   "select_day": "Sélectionnez un jour à traiter (ou 'All') : ",
-  "back_btn": "Dos"
+  "back_btn": "Dos",
+  "missing_graph_error": "Erreur : Données de graphique manquantes dans les exécutions -> ",
+  "continue_no_graph": "Continuer et compiler sans données de graphique ? [O]/N : ",
+  "invalid_graph_data": "DONNÉES DE GRAPHIQUE INVALIDES"
 }
 }
